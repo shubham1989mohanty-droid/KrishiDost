@@ -1,0 +1,53 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        // Kotlin version
+        kotlin_version = '1.8.0'
+        
+        // Build tools and Android SDK versions
+        buildToolsVersion = "34.0.0"
+        targetSdkVersion = 34
+        compileSdkVersion = 34
+        minSdkVersion = 21
+        
+        // JDK compatibility (JDK 17 required)
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Configure all Java compilation tasks to use JDK 17
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// Configure all Kotlin compilation tasks
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+        freeCompilerArgs = ['-Xopt-in=kotlin.ExperimentalStdlibApi']
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
